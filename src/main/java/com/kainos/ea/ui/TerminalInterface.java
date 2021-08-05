@@ -2,6 +2,7 @@ package com.kainos.ea.ui;
 
 import com.kainos.ea.Employee_stuff.Department;
 import com.kainos.ea.Employee_stuff.Employee;
+import com.kainos.ea.Employee_stuff.SalesEmployee;
 import com.kainos.ea.employeesdb.EmployeesDB;
 
 import java.util.Scanner;
@@ -60,6 +61,7 @@ public class TerminalInterface {
         System.out.println("1.Logout");
         System.out.println("2.Get Employees");
         System.out.println("3.Insert Employee");
+        System.out.println("4.Insert Sales Employee");
 
         try {
             selectedOption = Integer.parseInt(scanner.nextLine());
@@ -135,6 +137,89 @@ public class TerminalInterface {
                 System.out.println("Executing Query");
                 EmployeesDB.insertEmployee(new Employee(id, name, address, nino, bank, salary, department));
             }
+
+            loggedInProcess();
+        } else if (selectedOption == 4) {
+            System.out.println("Enter sales employee ID: ");
+            short id;
+            try {
+                id = Short.parseShort(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Bad ID");
+                loggedInProcess();
+                return;
+            }
+
+            System.out.println("Enter sales employee Name: ");
+            String name = scanner.nextLine();
+
+            System.out.println("Enter sales employee Address: ");
+            String address = scanner.nextLine();
+
+            System.out.println("Enter sales employee NINO: ");
+            String nino = scanner.nextLine();
+
+            System.out.println("Enter sales employee Bank Details: ");
+            String bank = scanner.nextLine();
+
+            System.out.println("Is manager (y/n): ");
+            String ans = scanner.nextLine();
+            Boolean isManager = false;
+            if (ans.equalsIgnoreCase("y")) {
+                isManager = true;
+            } else if (ans.equalsIgnoreCase("n")) {
+                isManager = false;
+            } else {
+                System.out.println("Bad Input");
+                loggedInProcess();
+                return;
+            }
+
+            System.out.println("Enter sales employee Salary: ");
+            float salary;
+            try {
+                salary = Float.parseFloat(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Bad Salary");
+                loggedInProcess();
+                return;
+            }
+
+            System.out.println("Enter sales employee number of sales: ");
+            int numOfSales;
+            try {
+                numOfSales = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Bad Number of Sales");
+                loggedInProcess();
+                return;
+            }
+
+            System.out.println("Enter sales employee number of commission rate: ");
+            float commissionRate;
+            try {
+                commissionRate = Float.parseFloat(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Bad Commission Rate");
+                loggedInProcess();
+                return;
+            }
+
+            System.out.println("Enter sales employee total sales: ");
+            float totalSales;
+            try {
+                totalSales = Float.parseFloat(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Bad Total Sales");
+                loggedInProcess();
+                return;
+            }
+
+
+            Department department = Department.Sales;
+
+            System.out.println("Executing Query");
+            EmployeesDB.insertSalesEmployee(new SalesEmployee(id, name, address, nino, bank, salary, department, isManager, numOfSales, commissionRate,totalSales));
 
             loggedInProcess();
         } else {

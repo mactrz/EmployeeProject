@@ -112,7 +112,7 @@ public class EmployeesDB {
             Statement s = c.createStatement();
             emps.forEach(emp -> {
                 try {
-                    s.executeQuery(
+                    s.executeUpdate(
                             String.format("INSERT INTO Sales(EmployeeID, NumberOfSales, CommissionRate, TotalSalesBiAnnually)" +
                                             "VALUES(%d, %d, %2f, %2f)", emp.getId(), emp.getNumOfSales(),
                                     emp.getCommissionRate(), emp.getTotalSales()));
@@ -133,8 +133,8 @@ public class EmployeesDB {
         try {
             Statement s = c.createStatement();
             try {
-                s.executeQuery(
-                        String.format("INSERT INTO Sales(EmployeeID, NumberOfSales, CommissionRate, TotalSalesBiAnnually)" +
+                s.executeUpdate(
+                        String.format("INSERT INTO Sales(EmployeeID, NumberOfSales, CommisionRate, TotalSalesBiAnnually)" +
                                         "VALUES(%d, %d, %2f, %2f)", emp.getId(), emp.getNumOfSales(),
                                 emp.getCommissionRate(), emp.getTotalSales()));
             } catch (Exception e) {
