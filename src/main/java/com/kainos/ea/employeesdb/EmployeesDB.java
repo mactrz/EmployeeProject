@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import com.kainos.ea.Employee_stuff.Employee;
+import com.kainos.ea.Employee_stuff.Project;
 import com.kainos.ea.Employee_stuff.SalesEmployee;
 
 public class EmployeesDB {
@@ -162,22 +163,31 @@ public class EmployeesDB {
         }
     }
 
-//    public static void getProjectsWithoutEmployees() {
-//        if (c == null) {
-//            c = getConnection();
-//        }
-//
-//        try {
-//            Statement s = c.createStatement();
-//            try {
-//                s.executeQuery("SELECT Project.Name FROM Employee inner join Project_Employee Using(EmployeeID)" +
-//                        "right outer join Project Using(ProjectID) where group by Project.Name");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static List<Project> getProjectsWithoutEmployees() {
+        if (c == null) {
+            c = getConnection();
+        }
+        List<Project> projects = new ArrayList<>();
+        try {
+            Statement s = c.createStatement();
+            try {
+                ResultSet rows =  s.executeQuery("SELECT ProjectName, ProjectID, Status, ProjectType, count(Name) as Devs " +
+                        "FROM Employee e inner join Project_Employee pe Using(EmployeeID) " +
+                        "right outer join Project p Using(ProjectID) group by ProjectName having Devs = 0;");
+                while (rows.next()) {
+                    projects.add(new Project(
+                            rows.getShort("ProjectID"),
+                            rows.getString("ProjectName"),
+                            rows.getString("Status"),
+                            rows.getString("ProjectType")));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
 }
 
