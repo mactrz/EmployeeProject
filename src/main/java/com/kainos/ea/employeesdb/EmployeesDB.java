@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import com.kainos.ea.Employee_stuff.Employee;
+import com.kainos.ea.Employee_stuff.SalesEmployee;
 
 public class EmployeesDB {
     private static Connection c;
@@ -26,7 +27,7 @@ public class EmployeesDB {
                         "Properties file must exist and must contain user, " +
                                 "password, and host properties.");
             c = DriverManager.getConnection("jdbc:mysql://" + host +
-                    "/employees", user, password);
+                    "/employee_CodePoltergeist", user, password);
             System.out.println("Connected!");
             return c;
         } catch (Exception e) {
@@ -98,6 +99,48 @@ public class EmployeesDB {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertSalesEmployees(List<SalesEmployee> emps) {
+        if (c == null) {
+            c = getConnection();
+        }
+
+        try {
+            Statement s = c.createStatement();
+            emps.forEach(emp -> {
+                try {
+                    s.executeQuery(
+                            String.format("INSERT INTO Sales(EmployeeID, NumberOfSales, CommissionRate, TotalSalesBiAnnually)" +
+                                            "VALUES(%d, %d, %2f, %2f)", emp.getId(), emp.getNumOfSales(),
+                                    emp.getCommissionRate(), emp.getTotalSales()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertSalesEmployee(SalesEmployee emp) {
+        if (c == null) {
+            c = getConnection();
+        }
+
+        try {
+            Statement s = c.createStatement();
+            try {
+                s.executeQuery(
+                        String.format("INSERT INTO Sales(EmployeeID, NumberOfSales, CommissionRate, TotalSalesBiAnnually)" +
+                                        "VALUES(%d, %d, %2f, %2f)", emp.getId(), emp.getNumOfSales(),
+                                emp.getCommissionRate(), emp.getTotalSales()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
