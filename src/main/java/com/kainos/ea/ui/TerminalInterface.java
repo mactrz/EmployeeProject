@@ -59,15 +59,15 @@ public class TerminalInterface {
             selectedOption = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e){
             System.out.println("Bad input!");
-            return;
+            loggedInProcess();
         }
 
         if (selectedOption == 1) {
             setLoggedIn(false);
             loginProcess();
         } else {
-            System.out.println("No option for number " + selectedOption + ", try again!");
-            return;
+            System.out.println("No option for number " + selectedOption + " !");
+            loggedInProcess();
         }
     }
 
