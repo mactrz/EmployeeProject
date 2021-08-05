@@ -1,4 +1,4 @@
-package com.kainos.ea.Employee_stuff;
+"package com.kainos.ea.Employee_stuff;
 
 public enum Department {
     HR,

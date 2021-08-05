@@ -26,7 +26,7 @@ public class EmployeesDB {
                         "Properties file must exist and must contain user, " +
                                 "password, and host properties.");
             c = DriverManager.getConnection("jdbc:mysql://" + host +
-                    "/employees", user, password);
+                    "/employee_CodePoltergeist", user, password);
             System.out.println("Connected!");
             return c;
         } catch (Exception e) {
@@ -44,11 +44,10 @@ public class EmployeesDB {
             Statement s = c.createStatement();
             ResultSet rows = s.executeQuery(
                     """
-                            SELECT emp_no / 10e3 AS `number`,
-                                CONCAT_WS(' ', first_name, last_name) AS `name`,
-                                salary * 100 AS `salary`
-                            FROM employees JOIN salaries USING(emp_no)
-                            WHERE to_date > NOW()
+                            SELECT EmployeeID,
+                                Name,
+                                Salary
+                            FROM Employee 
                             """);
             while (rows.next()) {
                 emps.add(new Employee(
@@ -70,7 +69,7 @@ public class EmployeesDB {
             Statement s = c.createStatement();
             emps.forEach(emp -> {
                 try {
-                    s.executeQuery(
+                    s.executeUpdate(
                             String.format("INSERT INTO Employee(EmployeeID, Name, Address, NIN, Salary, Department, IsDepartmentManager)" +
                                     "VALUES(%d, '%s', '%s', '%s', %2f, '%s', %b)", emp.getId(), emp.getName(),
                                     emp.getAddress(), emp.getNationalInsurance(), emp.getSalary(), emp.getDepartment(), emp.isDeptManager()));
@@ -91,7 +90,7 @@ public class EmployeesDB {
         try {
             Statement s = c.createStatement();
                 try {
-                    s.executeQuery(
+                    s.executeUpdate(
                             String.format("INSERT INTO Employee(EmployeeID, Name, Address, NIN, Salary, Department, IsDepartmentManager)" +
                                     "VALUES(%d, '%s', '%s', '%s', %2f, '%s', %b)", emp.getId(), emp.getName(),
                                     emp.getAddress(), emp.getNationalInsurance(), emp.getSalary(), emp.getDepartment(), emp.isDeptManager()));
