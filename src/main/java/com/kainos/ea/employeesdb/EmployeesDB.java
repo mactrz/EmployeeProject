@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import com.kainos.ea.Employee_stuff.Employee;
 
 public class EmployeesDB {
     private static Connection c;
@@ -32,30 +33,29 @@ public class EmployeesDB {
         }
         return null;
     }
-//    public static List<Employee> getEmployees() {
-//        if (c == null) {
-//            c = getConnection();
-//        }
-//        List<Employee> emps = new ArrayList<>();
-//        try {
-//            Statement s = c.createStatement();
-//            ResultSet rows = s.executeQuery(
-//                    """
-//                        SELECT emp_no / 10e3 AS `number`,
-//                            CONCAT_WS(' ', first_name, last_name) AS `name`,
-//                            salary * 100 AS `salary`
-//                        FROM employees JOIN salaries USING(emp_no)
-//                        WHERE to_date > NOW()
-//                        """);
-//            while (rows.next()) {
-//                emps.add(new Employee(
-//                        rows.getShort("number"),
-//                        rows.getString("name"),
-//                        rows.getInt("salary")));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return emps;
-//    }
+    public static List<Employee> getEmployees() {
+        if (c == null) {
+            c = getConnection();
+        }
+        List<Employee> emps = new ArrayList<>();
+        try {
+            Statement s = c.createStatement();
+            ResultSet rows = s.executeQuery(
+                    """
+                        SELECT emp_no / 10e3 AS `number`,
+                            CONCAT_WS(' ', first_name, last_name) AS `name`,
+                            salary * 100 AS `salary`
+                        FROM employees JOIN salaries USING(emp_no)
+                        WHERE to_date > NOW()
+                        """);
+            while (rows.next()) {
+                emps.add(new Employee(
+                        rows.getShort("EmployeeID"),
+                        rows.getString("Name")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return emps;
+    }
 }
