@@ -1,5 +1,7 @@
 package com.kainos.ea.ui;
 
+import com.kainos.ea.employeesdb.EmployeesDB;
+
 import java.util.Scanner;
 
 public class TerminalInterface {
@@ -54,6 +56,7 @@ public class TerminalInterface {
         System.out.println();
         System.out.println("What would you like to do Employee_" + getEmployeeID() +" ?");
         System.out.println("1.Logout");
+        System.out.println("2.Get Employees");
 
         try {
             selectedOption = Integer.parseInt(scanner.nextLine());
@@ -65,6 +68,10 @@ public class TerminalInterface {
         if (selectedOption == 1) {
             setLoggedIn(false);
             loginProcess();
+        } if (selectedOption == 2) {
+            System.out.println("Executing Query");
+            System.out.println(EmployeesDB.getEmployees());
+            loggedInProcess();
         } else {
             System.out.println("No option for number " + selectedOption + " !");
             loggedInProcess();
