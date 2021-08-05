@@ -144,5 +144,40 @@ public class EmployeesDB {
             e.printStackTrace();
         }
     }
+
+    public static void getReport() {
+        if (c == null) {
+            c = getConnection();
+        }
+        try {
+            Statement s = c.createStatement();
+            ResultSet rows = s.executeQuery("SELECT EmployeeID, Name, Department, FROM Employee ORDER BY Department");
+            while (rows.next()) {
+                System.out.println("ID: " + rows.getShort("EmployeeID"));
+                System.out.println("Name: " + rows.getString("Name"));
+                System.out.println("Department: " + rows.getShort("Department"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public static void getProjectsWithoutEmployees() {
+//        if (c == null) {
+//            c = getConnection();
+//        }
+//
+//        try {
+//            Statement s = c.createStatement();
+//            try {
+//                s.executeQuery("SELECT Project.Name FROM Employee inner join Project_Employee Using(EmployeeID)" +
+//                        "right outer join Project Using(ProjectID) where group by Project.Name");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
