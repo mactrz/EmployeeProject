@@ -77,17 +77,37 @@ public class TerminalInterface {
             loggedInProcess();
         } else if (selectedOption == 3) {
             System.out.println("Enter employee ID: ");
-            short id = Short.parseShort(scanner.nextLine());
+            short id;
+            try {
+                id = Short.parseShort(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Bad ID");
+                loggedInProcess();
+                return;
+            }
+
             System.out.println("Enter employee Name: ");
             String name = scanner.nextLine();
+
             System.out.println("Enter employee Address: ");
             String address = scanner.nextLine();
+
             System.out.println("Enter employee NINO: ");
             String nino = scanner.nextLine();
+
             System.out.println("Enter employee Bank Details: ");
             String bank = scanner.nextLine();
+
             System.out.println("Enter employee Salary: ");
-            float salary = Float.parseFloat(scanner.nextLine());
+            float salary;
+            try {
+                salary = Float.parseFloat(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Bad Salary");
+                loggedInProcess();
+                return;
+            }
+
             System.out.println("Enter employee Department: ");
             String depart = scanner.nextLine();
             Department department = Department.HR;
