@@ -15,7 +15,13 @@ public class TerminalInterface {
 
     public static void main(String[] args) {
         TerminalInterface ui = new TerminalInterface();
-        ui.loginProcess();
+
+        while(true) {
+            while(!ui.isLoggedIn()) {
+                ui.loginProcess();
+            }
+            ui.loggedInProcess();
+        }
     }
 
     public void loginProcess() {
@@ -31,19 +37,19 @@ public class TerminalInterface {
             return;
         } else {
             setLoggedIn(true);
-            loggedInProcess();
         }
     }
 
     private void requestLogin() {
+        System.out.println();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your EmpployeeID: ");
+        System.out.println("Enter your EmployeeID: ");
         setEmployeeID(Integer.parseInt(scanner.nextLine()));
         System.out.println("Enter your Password: ");
         setEmployeePassword(scanner.nextLine());
     }
 
-    //Stub method
+    //Stub
     private boolean validateLogin() {
         return true;
     }
@@ -68,16 +74,17 @@ public class TerminalInterface {
             selectedOption = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e){
             System.out.println("Bad input!");
-            loggedInProcess();
+            return;
         }
 
         if (selectedOption == 1) {
             setLoggedIn(false);
-            loginProcess();
+            System.out.println("Logout successful!");
+            return;
         } else if (selectedOption == 2) {
             System.out.println("Executing Query");
             System.out.println(EmployeesDB.getEmployees());
-            loggedInProcess();
+            return;
         } else if (selectedOption == 3) {
             System.out.println("Enter employee ID: ");
             short id;
@@ -85,7 +92,6 @@ public class TerminalInterface {
                 id = Short.parseShort(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Bad ID");
-                loggedInProcess();
                 return;
             }
 
@@ -107,7 +113,6 @@ public class TerminalInterface {
                 salary = Float.parseFloat(scanner.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("Bad Salary");
-                loggedInProcess();
                 return;
             }
 
@@ -139,7 +144,7 @@ public class TerminalInterface {
                 EmployeesDB.insertEmployee(new Employee(id, name, address, nino, bank, salary, department));
             }
 
-            loggedInProcess();
+            return;
         } else if (selectedOption == 4) {
             System.out.println("Enter sales employee ID: ");
             short id;
@@ -147,7 +152,6 @@ public class TerminalInterface {
                 id = Short.parseShort(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Bad ID");
-                loggedInProcess();
                 return;
             }
 
@@ -172,7 +176,6 @@ public class TerminalInterface {
                 isManager = false;
             } else {
                 System.out.println("Bad Input");
-                loggedInProcess();
                 return;
             }
 
@@ -182,7 +185,6 @@ public class TerminalInterface {
                 salary = Float.parseFloat(scanner.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("Bad Salary");
-                loggedInProcess();
                 return;
             }
 
@@ -192,7 +194,6 @@ public class TerminalInterface {
                 numOfSales = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Bad Number of Sales");
-                loggedInProcess();
                 return;
             }
 
@@ -202,7 +203,6 @@ public class TerminalInterface {
                 commissionRate = Float.parseFloat(scanner.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("Bad Commission Rate");
-                loggedInProcess();
                 return;
             }
 
@@ -212,7 +212,6 @@ public class TerminalInterface {
                 totalSales = Float.parseFloat(scanner.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("Bad Total Sales");
-                loggedInProcess();
                 return;
             }
 
@@ -222,16 +221,16 @@ public class TerminalInterface {
             System.out.println("Executing Query");
             EmployeesDB.insertSalesEmployee(new SalesEmployee(id, name, address, nino, bank, salary, department, isManager, numOfSales, commissionRate,totalSales));
 
-            loggedInProcess();
+            return;
         } else if (selectedOption == 5)
         {
             System.out.println("Executing Query");
             EmployeesDB.getReport();
-            loggedInProcess();
+            return;
         }
         else {
             System.out.println("No option for number " + selectedOption + " !");
-            loggedInProcess();
+            return;
         }
     }
 
