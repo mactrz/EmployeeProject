@@ -62,6 +62,7 @@ public class TerminalInterface {
         System.out.println("2.Get Employees");
         System.out.println("3.Insert Employee");
         System.out.println("4.Insert Sales Employee");
+        System.out.println("5.Get Employees and Department");
 
         try {
             selectedOption = Integer.parseInt(scanner.nextLine());
@@ -222,7 +223,13 @@ public class TerminalInterface {
             EmployeesDB.insertSalesEmployee(new SalesEmployee(id, name, address, nino, bank, salary, department, isManager, numOfSales, commissionRate,totalSales));
 
             loggedInProcess();
-        } else {
+        } else if (selectedOption == 5)
+        {
+            System.out.println("Executing Query");
+            EmployeesDB.getReport();
+            loggedInProcess();
+        }
+        else {
             System.out.println("No option for number " + selectedOption + " !");
             loggedInProcess();
         }
