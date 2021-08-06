@@ -152,11 +152,12 @@ public class EmployeesDB {
         }
         try {
             Statement s = c.createStatement();
-            ResultSet rows = s.executeQuery("SELECT EmployeeID, Name, Department, FROM Employee ORDER BY Department");
+            ResultSet rows = s.executeQuery("SELECT EmployeeID, Name, Department FROM Employee ORDER BY Department" +
+                    "");
             while (rows.next()) {
                 System.out.println("ID: " + rows.getShort("EmployeeID"));
                 System.out.println("Name: " + rows.getString("Name"));
-                System.out.println("Department: " + rows.getShort("Department"));
+                System.out.println("Department: " + rows.getString("Department"));
             }
         } catch (Exception e) {
             e.printStackTrace();
